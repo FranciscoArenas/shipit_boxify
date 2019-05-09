@@ -75,14 +75,13 @@ if rails_env == 'production'
   pidfile "#{shared_dir}/pids/puma.pid"
   state_path "#{shared_dir}/pids/puma.state"
   activate_control_app
+
+  # on_worker_boot do
+  #   require "active_record"
+  #   ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
+  #   ActiveRecord::Base.establish_connection(YAML.load_file("#{app_dir}/config/database.yml")[rails_env])
+  # end
 end
 
 # Logging
-# stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true
-
-
-on_worker_boot do
-  require "active_record"
-  ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
-  ActiveRecord::Base.establish_connection(YAML.load_file("#{app_dir}/config/database.yml")[rails_env])
-end
+stdout_redirect "#{shared_dir}/log/#{rails_env}.log", "#{shared_dir}/log/error.#{rails_env}.log", true
