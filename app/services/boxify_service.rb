@@ -4,17 +4,17 @@
 class BoxifyService
   def self.setup_measures(packs)
     boxes = packs[:packages].map { |package| new_box(package) }
-    weighted_packages = packs[:packages].sum { |package| (package[:weight] || 1) * package[:quantity] }
+    weighted_packages = packs[:packages].sum { |package| ((package[:weight] || 1) * package[:quantity]) }
     boxes_packed = pack(boxes)
     box_measures(boxes_packed, weighted_packages)
   end
 
   def self.new_box(package)
     Boxify::Box.new(
-      width: package[:width],
-      depth: package[:length],
-      height: package[:height],
-      total_count: package[:quantity]
+      width: package[:width].try(:round),
+      depth: package[:length].to_f,
+      height: package[:height].try(:round),
+      total_count: package[:quantity].to_i
     )
   end
 
