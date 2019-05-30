@@ -11,10 +11,10 @@ class BoxifyService
 
   def self.new_box(package)
     Boxify::Box.new(
-      width: package[:width].try(:round) || 10,
-      depth: package[:length].try(:to_f) || 10,
-      height: package[:height].try(:round) || 10,
-      total_count: package[:quantity].to_i || 1
+      width: (package[:width] || 10).try(:round),
+      depth: (package[:length] || 10).try(:to_f),
+      height: (package[:height] || 10).try(:round),
+      total_count: (package[:quantity] || 1).try(:to_i)
     )
   end
 
