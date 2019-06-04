@@ -6,7 +6,7 @@ class BoxifyService
     boxes = packs[:packages].map { |package| new_box(package) }
     weighted_packages = packs[:packages].sum do |package|
       (
-        (package[:weight].blank? || package[:weight].zero? ? 0.2 : package[:width]) * 
+        (package[:weight].blank? || package[:weight].zero? ? 0.2 : package[:weight]) * 
         (package[:quantity].blank? || package[:quantity].zero? ? 1 : package[:quantity])
       )
     end
